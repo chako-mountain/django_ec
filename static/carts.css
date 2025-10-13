@@ -1,0 +1,92 @@
+.contents {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.main_contents {
+    margin-left: 40px;
+}
+
+.name {
+    display: flex;
+    gap: 10px;
+}
+
+input.short{
+    width: 120px
+}
+
+input.non_name {
+    width: 500px;
+}
+
+.country_info {
+    display: flex;
+    gap: 20px;
+}
+
+.your_cart {
+    margin-top: 40px;
+    /* border: solid 1px; */
+}
+
+.product_contents {
+    width: 200px;
+    border: solid 1px;
+    border-radius: 5px;
+    border-color: rgb(183, 185, 186);
+    /* display: inline; */
+}
+
+.total_price {
+    /* margin-top: 20px; */
+    padding-top: 40px;
+}
+
+.product_name_and_price {
+    padding-left: 20px;
+}
+
+.product_contents {
+    display: flex;
+    gap: 100px;
+}
+
+.buy_items {
+    display: flex;
+}
+
+.credit_card_title {
+    margin-top: 40px;
+}
+
+.name_and_number {
+    display: flex;
+    gap: 10px;
+
+}
+
+.credit_textarea {
+    width: 240px;
+}
+
+.submit_button {
+    margin-top: 20px;
+    width: 500px;
+}
+
+
+footer {
+    width: 100%;
+    height: 100px;
+    background-color: #bbb8b8;
+    color: rgb(255, 255, 255);
+}
+
+
+footer div {
+    text-align: center;
+    padding: 30px;
+}

@@ -1,0 +1,72 @@
+ol.breadcrumb {
+    margin-bottom: 0px !important;
+    background-color: rgb(255, 255, 255);
+    padding-left: 100px !important;
+    padding-right: 100px !important;
+}
+
+.breadcrumb a {
+    color: #000000 !important;
+}
+
+header .jumbotron {
+    background-color: #000000 !important;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    margin-top: 0;
+}
+
+.flash_message {
+    font-size: 50px;
+    color: red;
+    text-align: center;
+    background-color: #d4edda;
+    /* 明るい緑（成功メッセージっぽく） */
+    color: #155724;
+    /* 濃い緑（テキスト） */
+    padding: 15px;
+    margin: 20px auto;
+    border-radius: 5px;
+    border: 1px solid #c3e6cb;
+    width: 80%;
+    max-width: 800px;
+}
+
+.main_contents {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin: 100px;
+}
+
+@media screen and (min-width: 1700px) {
+    .breadcrumb {
+        margin-left: 100px !important;
+        margin-right: 100px !important;
+        /* max-width: 1200px;
+        margin: 100px auto; */
+    }
+
+    .main_contents {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        max-width: 1200px;
+        margin: 100px auto;
+    }
+
+}
+
+
+footer {
+    width: 100%;
+    height: 100px;
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+}
+
+
+footer div {
+    text-align: center;
+    padding: 30px;
+}

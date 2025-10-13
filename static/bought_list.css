@@ -1,0 +1,12 @@
+h1 {
+    background-color: aqua;
+}
+
+.name {
+    font-size: 30px;
+}
+
+.bought_col {
+    display: flex;
+    gap: 30px;
+}

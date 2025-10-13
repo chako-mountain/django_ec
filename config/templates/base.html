@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      {% block link %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    {% block flash_message %}
+    {% endblock %}
+    {% block body %}
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">About</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="#">Shop</a></li>
+          <li class="ml-auto">
+            <form name = "from_lists" value = "from_lists" method = "POST">
+              <a href="{% url 'is-saved' %}">{{ item_sum }} items in cart</a>
+            </form>
+          </li>
+        </ol>
+      </nav>
+    {% block content %}{% endblock %}
+    {% block javascripts %}{% endblock javascripts %}
+    {% endblock %}
+  </body>
+  <footer>
+    <div>ECサイト見本</div>
+  </footer>
+</html>
+
+
