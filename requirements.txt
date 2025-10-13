@@ -16,7 +16,7 @@ whitenoise==6.11.0
 gunicorn==23.0.0
 dj-database-url==3.0.1
 sqlparse==0.5.3
-asgiref==3.10.0
+# asgiref==3.10.0
 django-basicauth==0.5
 
 
