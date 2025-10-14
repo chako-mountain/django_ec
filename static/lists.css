@@ -16,22 +16,6 @@ header .jumbotron {
     margin-top: 0;
 }
 
-.flash_message {
-    font-size: 50px;
-    color: red;
-    text-align: center;
-    background-color: #d4edda;
-    /* 明るい緑（成功メッセージっぽく） */
-    color: #155724;
-    /* 濃い緑（テキスト） */
-    padding: 15px;
-    margin: 20px auto;
-    border-radius: 5px;
-    border: 1px solid #c3e6cb;
-    width: 80%;
-    max-width: 800px;
-}
-
 .main_contents {
     display: flex;
     flex-wrap: wrap;

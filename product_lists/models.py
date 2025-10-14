@@ -52,7 +52,7 @@ class CartProduct(BaseModel):
 class Order(BaseModel):
     cart = models.ForeignKey(CartList, on_delete=models.PROTECT, related_name="order")
     first_name = models.CharField(max_length=255, null=False)
-    last_name = models.CharField(max_length=255, null=False)
+    second_name = models.CharField(max_length=255, null=False)
     user_name = models.CharField(max_length=255, null=False)
     email = models.EmailField(max_length=255, null=False)
     address = models.CharField(max_length=255, null=False)
@@ -78,4 +78,3 @@ class OrderProduct(BaseModel):
 
     def __str__(self):
         return str(self.order)
-

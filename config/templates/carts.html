@@ -67,39 +67,29 @@
                             </div>
                             
                             <div class="credit_card">
-                                <h4 class="credit_card_title">
+                                <h4>
                                     CreditCard Information
                                 </h4>
                             
                                 <div class="credit_card_details">
-                                    <div class="name_and_number">
-                                        <div>
-                                            <div>
-                                                Name on card
-                                            </div>
-                                            <input name="name_on_card" type="text" name="name_on_card" id="inputPassword5" class="form-control credit_textarea"
-                                                aria-labelledby="passwordHelpBlock">
-                                        </div>
-                                        <div>
-                                            <div>
-                                                Credit cart number
-                                            </div>
-                                            <input type="text" name="card_number" id="inputPassword5" class="form-control credit_textarea"
-                                                aria-labelledby="passwordHelpBlock">
-                                        </div>
+                                    <div>
+                                        Name on card
                                     </div>
-                                        
-                                
+                                    <input name="name_on_card" type="text" name="name_on_card">
+                                    <div>
+                                        Credit cart number
+                                    </div>
+                                    <input type="text" name="card_number">
                                     <div>
                                         Expiration
                                     </div>
-                                    <input type="text" name="expiration"id="inputPassword5" class="form-control non_name" aria-labelledby="passwordHelpBlock">
+                                    <input type="text" name="expiration">
                                     <div>
                                         CVV
                                     </div>
-                                    <input type="text" name="CVV"id="inputPassword5" class="form-control non_name" aria-labelledby="passwordHelpBlock">
+                                    <input type="text" name="CVV">
                                 </div>
-                                <input type="submit" class="btn btn-primary submit_button" value="checkout">
+                                <input type="submit" value="商品作成">
                             
                             </div>
                         </form>
@@ -127,7 +117,7 @@
                                 {{ cart.number }}個
                             </div>  
                         </div>
-                        <form action="{% url 'cart_delete' %}" method="POST">
+                        <form action="{% url 'cart_checkout' %}" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="delete" value="{{ cart.id }}">
                             <button type="submit" >×</button>

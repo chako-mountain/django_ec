@@ -9,8 +9,6 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-    {% block flash_message %}
-    {% endblock %}
     {% block body %}
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -19,7 +17,7 @@
           <li class="breadcrumb-item active" aria-current="page"><a href="#">Shop</a></li>
           <li class="ml-auto">
             <form name = "from_lists" value = "from_lists" method = "POST">
-              <a href="{% url 'is-saved' %}">{{ item_sum }} items in cart</a>
+              <a href="{% url 'cart' %}">{{ item_sum }} items in cart</a>
             </form>
           </li>
         </ol>
