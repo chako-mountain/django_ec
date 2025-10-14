@@ -135,7 +135,6 @@ def cart_view(request):
         total_price = cart.total_price()
         total_goods = cart.total_quantity()
         return render(request, "carts.html", {"carts": cart_products, "total_price": total_price, "total_number": total_goods})
-
     except CartList.DoesNotExist:
         print("ユーザーが見つかりませんでした")
         return render(request, "carts.html", {"carts": []})
