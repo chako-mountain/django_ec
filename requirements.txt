@@ -18,7 +18,9 @@ gunicorn==23.0.0
 sqlparse==0.5.3
 # asgiref==3.10.0
 django-basicauth==0.5.3
-psycopg2-binary==2.9.9
 requests>=2.0.0
+psycopg2-binary==2.9.9
+
+
 
 
