@@ -20,6 +20,8 @@ sqlparse==0.5.3
 django-basicauth==0.5.3
 requests>=2.0.0
 psycopg2-binary==2.9.9
+django-anymail[mailgun]==13.1
+
 
 
 
