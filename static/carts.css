@@ -58,20 +58,25 @@ input.non_name {
     display: flex;
 }
 
-/* .delete-button {
-    color: white;
-    width: 24px;
-    height: 24px;
-    background-color: rgb(213, 209, 209);
-    border-radius: 50%;
-    text-align: center;
+.credit_card_title {
+    margin-top: 40px;
+}
 
-    line-height: 24px;
+.name_and_number {
+    display: flex;
+    gap: 10px;
 
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-} */
+}
+
+.credit_textarea {
+    width: 240px;
+}
+
+.submit_button {
+    margin-top: 20px;
+    width: 500px;
+}
+
 
 footer {
     width: 100%;

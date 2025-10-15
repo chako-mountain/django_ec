@@ -8,10 +8,21 @@
     <header>
         <div class="jumbotron text-center">
             <h1 class="display-4">Shop in style</h1>
-            <p class="lead"> ECサイトの見本です</p>
+            <p class="lead"> ECサイトの見本です。お買い物</p>
         </div>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="flash_message">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
     </header>
+
+
     <main class="main_contents ">
+
     {% for items in object_list %}
         <div class="card" style="width: 18rem;" >
         <!-- <a href=" https://www.nblog09.com/w/2019/02/09/django-template-url/ ">THE OTHER PAGE</a> -->

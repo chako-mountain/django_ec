@@ -1,1 +1,1 @@
-web: gunicorn product_lists.wsgi
+web: gunicorn config.wsgi

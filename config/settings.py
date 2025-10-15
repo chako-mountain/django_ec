@@ -37,19 +37,34 @@ INSTALLED_APPS = [
     'product_lists',
 ]
 
+# MIDDLEWARE = [
+#     'django.middleware.security.SecurityMiddleware',
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     'django.middleware.csrf.CsrfViewMiddleware',
+#     'django.contrib.auth.middleware.AuthenticationMiddleware',
+#     'django.contrib.messages.middleware.MessageMiddleware',
+#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#     # 'basicauth.middleware.BasicAuthMiddleware',
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+# ]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # 静的ファイル用（必ず2番目）
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # 必須
+    'django.contrib.messages.middleware.MessageMiddleware',      # 必須
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'basicauth.middleware.BasicAuthMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    # 'basicauth.middleware.BasicAuthMiddleware',
 ]
 
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_COOKIE_AGE = SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
 
@@ -148,5 +163,14 @@ BASICAUTH_USERS = {
 }
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# 静的ファイルの設定
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+ALLOWED_HOSTS = [
+    'sheltered-beyond-73876-d74d779e157a.herokuapp.com',
+    'localhost',
+    '127.0.0.1'
+]

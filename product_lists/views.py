@@ -1,16 +1,17 @@
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
-from product_lists.models import ProductList, CartList, CartProduct
+from product_lists.models import ProductList, CartList, CartProduct,Order,OrderProduct
 from django.http import HttpResponseRedirect 
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
-from basicauth.decorators import basic_auth_required
+# from basicauth.decorators import basic_auth_required
 from django.shortcuts import get_object_or_404
 import uuid
 from django.db.models import Sum
+from django.contrib import messages
 
 
 def product_list_view(request):
@@ -34,15 +35,16 @@ def product_detail_view(request, id,):
     related_product = ProductList.objects.order_by("-created_at")[:4]
     product = get_object_or_404(ProductList, id=id)
     return render(request, 'details.html', {"related_products": related_product, "product": product, "item_sum":item_sum})
-    
 
-@basic_auth_required
+
+# @basic_auth_required
 def admin_product_list_view(request):
     products = ProductList.objects.all()
     return render(request, 'administrator.html', {'object_list': products})
 
 
-@basic_auth_required
+
+# @basic_auth_required
 def product_create_view(request):
     if request.method == "POST":
         product = ProductList()
@@ -65,20 +67,20 @@ def product_create_view(request):
     return redirect('administrator')
 
 
-@basic_auth_required
+# @basic_auth_required
 def product_delete_view(request):
     delete_id = request.POST["post_id"]
     ProductList.objects.filter(id = delete_id).delete()
     return redirect('administrator')
 
 
-@basic_auth_required
+# @basic_auth_required
 def product_edit_view(request, id):
     product = ProductList.objects.get(id=id)
     return render(request, "edit.html" ,{ "edit_list" : product })
 
 
-@basic_auth_required
+# @basic_auth_required
 def product_update_view(request ,id):
     product = ProductList.objects.get(id=id)
     product.name = request.POST.get("name", "").strip()
@@ -101,7 +103,7 @@ def product_update_view(request ,id):
         return render(request, "edit.html", { "edit_list": product, "error_message": error_message })
 
 
-@basic_auth_required
+# @basic_auth_required
 def admin_page(request):
     return redirect("administrator")
 
@@ -133,7 +135,6 @@ def cart_view(request):
         total_price = cart.total_price()
         total_goods = cart.total_quantity()
         return render(request, "carts.html", {"carts": cart_products, "total_price": total_price, "total_number": total_goods})
-
     except CartList.DoesNotExist:
         print("ユーザーが見つかりませんでした")
         return render(request, "carts.html", {"carts": []})
@@ -143,17 +144,83 @@ def cart_delete_view(request):
     id = request.POST.get("delete")
     cart_product = CartProduct.objects.get(id=id)
     cart_product.delete()
+    
+    session_key = str(request.session.get('key', None))
+    user = CartList.objects.get(session_key=session_key)
+    if Order.objects.filter(cart=user.id).exists():
+        return redirect("is-saved")
     return redirect("cart")
 
 
 def cart_checkout_view(request):
-    print("checkout is called")
+    session_key = str(request.session.get('key', None))
+    obj = CartList.objects.get(session_key=session_key)
+    cart_products = CartProduct.objects.filter(cart=obj.id)
 
-    print(request.POST)
+    user = CartList.objects.get(session_key=session_key)
+    if Order.objects.filter(cart=user.id).exists():
+        order = Order.objects.get(cart=user.id)
+        for cart_product in cart_products:
+            order_products = OrderProduct()
+            order_products.order = order
+            order_products.product_name = cart_product.product.name
+            order_products.product_price = cart_product.product.price
+            order_products.quantity = cart_product.number
+            order_products.save()
 
-    
-    
-    first_name = request.POST.get("first_name")
-    print(first_name)
+    else:
+        order = Order()
+        billing_details = request.POST
+        order.cart = obj
+        order.first_name = billing_details.get("first_name")
+        order.last_name = billing_details.get("last_name")
+        order.user_name = billing_details.get("user_name")
+        order.email = billing_details.get("email")
+        order.address = billing_details.get("address1")
+        order.address2 = billing_details.get("address2")
+        order.country = billing_details.get("country")
+        order.state = billing_details.get("state")
+        order.zip = billing_details.get("zip")
+        order.name_on_card = billing_details.get("name_on_card")
+        order.credit_card_number = billing_details.get("card_number")
+        order.expiry_date = billing_details.get("expiration")
+        order.CVV = billing_details.get("CVV")
+        order.save()
 
+        for cart_product in cart_products:
+            order_products = OrderProduct()
+            order_products.order = order
+            order_products.product_name = cart_product.product.name
+            order_products.product_price = cart_product.product.price
+            order_products.quantity = cart_product.number
+            order_products.save()
+    cart_products.delete()
+
+    messages.success(request, "ご購入ありがとうございました！注文が正常に完了しました。")
     return redirect("lists")
+
+
+def is_credit_card_saved(request):
+    session_key = str(request.session.get('key', None))
+    user = CartList.objects.get(session_key=session_key)
+    if Order.objects.filter(cart=user.id).exists():
+        try:
+            previous_credit_card_data = Order.objects.get(cart=user.id)
+            cart_products = CartList.objects.get(session_key=session_key).cart_products.all()
+            cart = CartList.objects.get(session_key=session_key)
+            total_price = cart.total_price()
+            total_goods = cart.total_quantity()
+            return render(request,"cart_only.html", {"previous_credit_card_data": previous_credit_card_data,"carts": cart_products, "total_price": total_price, "total_number": total_goods})
+        except CartList.DoesNotExist:
+            print("ユーザーが見つかりませんでした")
+            return render(request, "carts.html", {"carts": []})
+    else:
+        return redirect("cart")
+    
+        
+def bought_list_view(request):
+    session_key = str(request.session.get('key', None))
+    user = CartList.objects.get(session_key=session_key)
+    order = Order.objects.get(cart=user.id)
+    bought_list = OrderProduct.objects.filter(order=order.id)
+    return render(request, "bought_list.html" ,{"bought_list":bought_list, "order_info":order})
