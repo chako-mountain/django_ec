@@ -472,7 +472,7 @@ def bought_list_view(request):
 
 
 def send_simple_message():
-    return requests.post(
+    response = requests.post(
         f"https://api.mailgun.net/v3/{os.getenv('MAILGUN_DOMAIN')}/messages",
         auth=("api", os.getenv('MAILGUN_API_KEY')),
         data={
@@ -482,3 +482,5 @@ def send_simple_message():
             "text": "Congratulations taiga, you just sent an email with Mailgun! You are truly awesome!"
         }
     )
+    print("Mailgun Response:", response.status_code, response.text)  # ここで確認
+    return response
