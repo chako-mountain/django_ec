@@ -23,7 +23,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'djangoec-ef31fc15f2bb.herokuapp.com',
+    'sheltered-beyond-73876-d74d779e157a.herokuapp.com',
     '127.0.0.1',
     'localhost',
 ]
