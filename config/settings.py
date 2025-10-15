@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'product_lists',
+    'anymail',
 ]
 
 # MIDDLEWARE = [
@@ -173,5 +174,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+ANYMAIL = {
+    "MAILGUN_API_KEY":"5e1ffd43-c6f1aee7",
+    "MAILGUN_DOMEIN":"sandboxde043ff338654f72a5c5ba39d98c2272.mailgun.org"
+}
 
-
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBckend"
