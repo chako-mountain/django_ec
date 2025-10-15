@@ -461,11 +461,24 @@ def bought_list_view(request):
     return render(request, "bought_list.html" ,{"bought_list":bought_list, "order_info":order})
 
 
+# def send_simple_message():
+#   	return requests.post(
+#   		"https://api.mailgun.net/v3/sandboxde043ff338654f72a5c5ba39d98c2272.mailgun.org/messages",
+#   		auth=("api", os.getenv('API_KEY', 'API_KEY')),
+#   		data={"from": "Mailgun Sandbox <postmaster@sandboxde043ff338654f72a5c5ba39d98c2272.mailgun.org>",
+# 			"to": "taiga <gonzaburouduanyewufu@gmail.com>",
+#   			"subject": "Hello taiga",
+#   			"text": "Congratulations taiga, you just sent an email with Mailgun! You are truly awesome!"})
+
+
 def send_simple_message():
-  	return requests.post(
-  		"https://api.mailgun.net/v3/sandboxde043ff338654f72a5c5ba39d98c2272.mailgun.org/messages",
-  		auth=("api", os.getenv('API_KEY', 'API_KEY')),
-  		data={"from": "Mailgun Sandbox <postmaster@sandboxde043ff338654f72a5c5ba39d98c2272.mailgun.org>",
-			"to": "taiga <gonzaburouduanyewufu@gmail.com>",
-  			"subject": "Hello taiga",
-  			"text": "Congratulations taiga, you just sent an email with Mailgun! You are truly awesome!"})
+    return requests.post(
+        f"https://api.mailgun.net/v3/{os.getenv('MAILGUN_DOMAIN')}/messages",
+        auth=("api", os.getenv('MAILGUN_API_KEY')),
+        data={
+            "from": f"Mailgun Sandbox <postmaster@{os.getenv('MAILGUN_DOMAIN')}>",
+            "to": "taiga <gonzaburouduanyewufu@gmail.com>",
+            "subject": "Hello taiga",
+            "text": "Congratulations taiga, you just sent an email with Mailgun! You are truly awesome!"
+        }
+    )
