@@ -23,9 +23,10 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'djangoec-ef31fc15f2bb.herokuapp.com'
+    'djangoec-ef31fc15f2bb.herokuapp.com',
+    '127.0.0.1',  # 開発用
+    'localhost',  # 開発用
 ]
-
 
 # Application definition
 
@@ -172,8 +173,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 
-ALLOWED_HOSTS = [
-    'djangoec-ef31fc15f2bb.herokuapp.com',
-    '127.0.0.1',  # 開発用
-    'localhost',  # 開発用
-]
