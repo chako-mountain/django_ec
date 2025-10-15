@@ -24,6 +24,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'sheltered-beyond-73876-d74d779e157a.herokuapp.com',
+    'djangoec-ef31fc15f2bb.herokuapp.com'
     '127.0.0.1',
     'localhost',
 ]
