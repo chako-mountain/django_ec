@@ -175,8 +175,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ANYMAIL = {
-    "MAILGUN_API_KEY":"5e1ffd43-c6f1aee7",
-    "MAILGUN_DOMEIN":"sandboxde043ff338654f72a5c5ba39d98c2272.mailgun.org"
+    "MAILGUN_API_KEY": "5e1ffd43-c6f1aee7",  
+    "MAILGUN_DOMAIN": "sandboxde043ff338654f72a5c5ba39d98c2272.mailgun.org",
 }
 
-EMAIL_BACKEND = "anymail.backends.mailgun.EmailBckend"
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
