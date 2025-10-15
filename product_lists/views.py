@@ -218,6 +218,7 @@ def is_credit_card_saved(request):
         return redirect("cart")
     
         
+        
 def bought_list_view(request):
     session_key = str(request.session.get('key', None))
     user = CartList.objects.get(session_key=session_key)
