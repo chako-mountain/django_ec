@@ -30,7 +30,6 @@ ALLOWED_HOSTS = [
 ]
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'product_lists',
+    'anymail',
 ]
 
 # MIDDLEWARE = [
@@ -174,9 +174,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
-# ALLOWED_HOSTS = [
-#     'sheltered-beyond-73876-d74d779e157a.herokuapp.com',
-#     'localhost',
-#     '127.0.0.1'
-# ]
+ANYMAIL = {
+    "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),  # envから読み込む
+    "MAILGUN_SENDER_DOMAIN": env("MAILGUN_DOMAIN"),
+}
