@@ -25,15 +25,6 @@ def product_list_view(request):
     except CartProduct.DoesNotExist:
         redirect("lists")
     product = ProductList.objects.all()
-    # send_simple_message()
-
-    # send_mail(
-    #     'テストメール',
-    #     'これはローカルから送信したテストメールです。',
-    #     'you@example.com',  # 送信元（Mailgun に設定してるアドレスに合わせる）
-    #     ['recipient@example.com'],  # 送信先
-    #     fail_silently=False,
-    # )
 
     return render(request, 'lists.html', {'object_list': product, "item_sum":item_sum})
 
@@ -239,16 +230,6 @@ def bought_list_view(request):
     order = Order.objects.get(cart=user.id)
     bought_list = OrderProduct.objects.filter(order=order.id)
     return render(request, "bought_list.html" ,{"bought_list":bought_list, "order_info":order})
-
-
-# def send_simple_message():
-#   	return requests.post(
-#   		"https://api.mailgun.net/v3/sandboxde043ff338654f72a5c5ba39d98c2272.mailgun.org/messages",
-#   		auth=("api", os.getenv('API_KEY', 'API_KEY')),
-#   		data={"from": "Mailgun Sandbox <postmaster@sandboxde043ff338654f72a5c5ba39d98c2272.mailgun.org>",
-# 			"to": "taiga <gonzaburouduanyewufu@gmail.com>",
-#   			"subject": "Hello taiga",
-#   			"text": "Congratulations taiga, you just sent an email with Mailgun! You are truly awesome!"})
 
 
 def send_simple_message(cart_products):
