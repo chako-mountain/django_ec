@@ -30,7 +30,6 @@ ALLOWED_HOSTS = [
 ]
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,19 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'product_lists',
+    'anymail',
 ]
 
-# MIDDLEWARE = [
-#     'django.middleware.security.SecurityMiddleware',
-#     'django.contrib.sessions.middleware.SessionMiddleware',
-#     'django.middleware.common.CommonMiddleware',
-#     'django.middleware.csrf.CsrfViewMiddleware',
-#     'django.contrib.auth.middleware.AuthenticationMiddleware',
-#     'django.contrib.messages.middleware.MessageMiddleware',
-#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-#     # 'basicauth.middleware.BasicAuthMiddleware',
-#     'django.contrib.sessions.middleware.SessionMiddleware',
-# ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -145,14 +134,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# try:
-#     from .local_settings import *
-# except ImportError:
-#     pass
-
-
-
-# 上部省略
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -174,9 +155,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
-# ALLOWED_HOSTS = [
-#     'sheltered-beyond-73876-d74d779e157a.herokuapp.com',
-#     'localhost',
-#     '127.0.0.1'
-# ]
+ANYMAIL = {
+    "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),  
+    "MAILGUN_SENDER_DOMAIN": env("MAILGUN_DOMAIN"),
+}

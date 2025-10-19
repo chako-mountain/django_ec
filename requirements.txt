@@ -1,13 +1,3 @@
-# altgraph @ file:///AppleInternal/Library/BuildRoots/39d9dc1a-2111-11f0-be06-226177e5bb69/Library/Caches/com.apple.xbs/Sources/python3/altgraph-0.17.2-py2.py3-none-any.whl
-# asgiref==3.9.1
-# Django==4.2.23
-# future @ file:///AppleInternal/Library/BuildRoots/39d9dc1a-2111-11f0-be06-226177e5bb69/Library/Caches/com.apple.xbs/Sources/python3/future-0.18.2-py3-none-any.whl
-# macholib @ file:///AppleInternal/Library/BuildRoots/39d9dc1a-2111-11f0-be06-226177e5bb69/Library/Caches/com.apple.xbs/Sources/python3/macholib-1.15.2-py2.py3-none-any.whl
-# six @ file:///AppleInternal/Library/BuildRoots/39d9dc1a-2111-11f0-be06-226177e5bb69/Library/Caches/com.apple.xbs/Sources/python3/six-1.15.0-py2.py3-none-any.whl
-# sqlparse==0.5.3
-# typing_extensions==4.15.0
-
-
 # Django==4.2.5
 Django==3.1
 django-environ==0.11.2
@@ -18,6 +8,9 @@ gunicorn==23.0.0
 sqlparse==0.5.3
 # asgiref==3.10.0
 django-basicauth==0.5.3
+requests>=2.0.0
 psycopg2-binary==2.9.9
-
+django-anymail[mailgun]==8.4
+django-anymail
+setuptools
 

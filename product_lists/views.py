@@ -7,13 +7,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
-# from basicauth.decorators import basic_auth_required
+from basicauth.decorators import basic_auth_required
 from django.shortcuts import get_object_or_404
 import uuid
 from django.db.models import Sum
 from django.contrib import messages
 import os
 import requests
+from django.core.mail import send_mail
 
 
 def product_list_view(request):
@@ -24,8 +25,7 @@ def product_list_view(request):
     except CartProduct.DoesNotExist:
         redirect("lists")
     product = ProductList.objects.all()
-    send_simple_message()
-    
+
     return render(request, 'lists.html', {'object_list': product, "item_sum":item_sum})
 
 
@@ -41,14 +41,14 @@ def product_detail_view(request, id,):
     return render(request, 'details.html', {"related_products": related_product, "product": product, "item_sum":item_sum})
 
 
-# @basic_auth_required
+@basic_auth_required
 def admin_product_list_view(request):
     products = ProductList.objects.all()
     return render(request, 'administrator.html', {'object_list': products})
 
 
 
-# @basic_auth_required
+@basic_auth_required
 def product_create_view(request):
     if request.method == "POST":
         product = ProductList()
@@ -71,20 +71,20 @@ def product_create_view(request):
     return redirect('administrator')
 
 
-# @basic_auth_required
+@basic_auth_required
 def product_delete_view(request):
     delete_id = request.POST["post_id"]
     ProductList.objects.filter(id = delete_id).delete()
     return redirect('administrator')
 
 
-# @basic_auth_required
+@basic_auth_required
 def product_edit_view(request, id):
     product = ProductList.objects.get(id=id)
     return render(request, "edit.html" ,{ "edit_list" : product })
 
 
-# @basic_auth_required
+@basic_auth_required
 def product_update_view(request ,id):
     product = ProductList.objects.get(id=id)
     product.name = request.POST.get("name", "").strip()
@@ -107,7 +107,7 @@ def product_update_view(request ,id):
         return render(request, "edit.html", { "edit_list": product, "error_message": error_message })
 
 
-# @basic_auth_required
+@basic_auth_required
 def admin_page(request):
     return redirect("administrator")
 
@@ -200,6 +200,8 @@ def cart_checkout_view(request):
             order_products.save()
     cart_products.delete()
 
+    send_simple_message(cart_products)
+
     messages.success(request, "ご購入ありがとうございました！注文が正常に完了しました。")
     return redirect("lists")
 
@@ -230,11 +232,31 @@ def bought_list_view(request):
     return render(request, "bought_list.html" ,{"bought_list":bought_list, "order_info":order})
 
 
-def send_simple_message():
-  	return requests.post(
-  		"https://api.mailgun.net/v3/sandboxde043ff338654f72a5c5ba39d98c2272.mailgun.org/messages",
-  		auth=("api", os.getenv('API_KEY', 'API_KEY')),
-  		data={"from": "Mailgun Sandbox <postmaster@sandboxde043ff338654f72a5c5ba39d98c2272.mailgun.org>",
-			"to": "taiga <gonzaburouduanyewufu@gmail.com>",
-  			"subject": "Hello taiga",
-  			"text": "Congratulations taiga, you just sent an email with Mailgun! You are truly awesome!"})
+def send_simple_message(cart_products):
+    # cart_productsはQuerySetなど複数商品が入る想定
+    product_lines = []
+    for cp in cart_products:
+        line = f"商品名: {cp.product.name}, 数量: {cp.number}"
+        product_lines.append(line)
+    product_list_text = "\n".join(product_lines)
+
+    email_text = f"""\
+
+        ご注文いただき、ありがとうございます。以下に商品詳細を記載いたします
+
+        {product_list_text}
+
+        """
+
+    response = requests.post(
+        f"https://api.mailgun.net/v3/{os.getenv('MAILGUN_DOMAIN')}/messages",
+        auth=("api", os.getenv('MAILGUN_API_KEY')),
+        data={
+            "from": f"Mailgun Sandbox <postmaster@{os.getenv('MAILGUN_DOMAIN')}>",
+            "to": "taiga <gonzaburouduanyewufu@gmail.com>",
+            "subject": "ご購入ありがとうございます",
+            "text": email_text,
+        }
+    )
+    print("Mailgun Response:", response.status_code, response.text)  # ここで確認
+    return response
