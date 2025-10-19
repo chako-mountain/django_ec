@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
-# from basicauth.decorators import basic_auth_required
+from basicauth.decorators import basic_auth_required
 from django.shortcuts import get_object_or_404
 import uuid
 from django.db.models import Sum
@@ -41,7 +41,7 @@ def product_detail_view(request, id,):
     return render(request, 'details.html', {"related_products": related_product, "product": product, "item_sum":item_sum})
 
 
-# @basic_auth_required
+@basic_auth_required
 def admin_product_list_view(request):
     products = ProductList.objects.all()
     return render(request, 'administrator.html', {'object_list': products})
