@@ -48,7 +48,7 @@ def admin_product_list_view(request):
 
 
 
-# @basic_auth_required
+@basic_auth_required
 def product_create_view(request):
     if request.method == "POST":
         product = ProductList()
@@ -71,20 +71,20 @@ def product_create_view(request):
     return redirect('administrator')
 
 
-# @basic_auth_required
+@basic_auth_required
 def product_delete_view(request):
     delete_id = request.POST["post_id"]
     ProductList.objects.filter(id = delete_id).delete()
     return redirect('administrator')
 
 
-# @basic_auth_required
+@basic_auth_required
 def product_edit_view(request, id):
     product = ProductList.objects.get(id=id)
     return render(request, "edit.html" ,{ "edit_list" : product })
 
 
-# @basic_auth_required
+@basic_auth_required
 def product_update_view(request ,id):
     product = ProductList.objects.get(id=id)
     product.name = request.POST.get("name", "").strip()
@@ -107,7 +107,7 @@ def product_update_view(request ,id):
         return render(request, "edit.html", { "edit_list": product, "error_message": error_message })
 
 
-# @basic_auth_required
+@basic_auth_required
 def admin_page(request):
     return redirect("administrator")
 
